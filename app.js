@@ -10,6 +10,7 @@ app.set('view engine', 'ejs');
 mongoose.connect("mongodb+srv://admin-binay:binay671@atlascluster.fwius.mongodb.net/remindersDB", {useNewUrlParser: true});
 const reminderSchema= {
     date: String,
+    time: String,
     name: String,
     content: String,
     link: String
@@ -39,6 +40,7 @@ app.route("/reminders")
 
         const newReminder= new Reminder({
             date: req.body.date,
+            time: req.body.time,
             name: req.body.name,
             content: req.body.content,
             link: req.body.link
