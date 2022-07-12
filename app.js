@@ -65,7 +65,17 @@ app.route("/reminders")
         })
     });
 
-// app.route("/articles/:tag")
+app.route("/articles/:tag")
+.delete(function(req,res){
+    Article.deleteOne(
+        {_id: req.params.tag},
+        function(err){
+            if(!err){
+                res.send("Deleted Successfully");
+            }
+        }
+    )
+});
 // .get(function(req,res){
 //     Article.findOne({name: req.params.tag}, function(err, foundItem){
 //         if(foundItem){
@@ -102,16 +112,7 @@ app.route("/reminders")
 //     )
 // })
 
-// .delete(function(req,res){
-//     Article.deleteOne(
-//         {name: req.params.tag},
-//         function(err){
-//             if(!err){
-//                 res.send("Deleted Successfully");
-//             }
-//         }
-//     )
-// });
+
 
 
 
