@@ -68,7 +68,7 @@ app.route("/reminders")
 
 app.route("/articles/:tag")
 .delete(function(req,res){
-    Article.deleteOne(
+    Article.deleteMany(
         {date: req.params.tag},
         function(err){
             if(!err){
