@@ -73,6 +73,8 @@ app.route("/articles/:tag")
         function(err){
             if(!err){
                 res.send("Deleted Successfully");
+            }else{
+                res.send(err+ " " + req.params.tag);
             }
         }
     )
