@@ -29,6 +29,7 @@ app.route("/reminders")
     .get(function(req,res){
         Reminder.find(function(err, foundItems){
             if(!err){
+
                 res.send(foundItems);
             }else{
                 res.send(err);
@@ -68,7 +69,7 @@ app.route("/reminders")
 app.route("/articles/:tag")
 .delete(function(req,res){
     Article.deleteOne(
-        {_id: req.params.tag},
+        {date: req.params.tag},
         function(err){
             if(!err){
                 res.send("Deleted Successfully");
