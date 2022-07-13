@@ -66,9 +66,9 @@ app.route("/reminders")
         })
     });
 
-app.route("/articles/:tag")
+app.route("/reminders/:tag")
 .delete(function(req,res){
-    Article.deleteMany(
+    Reminder.deleteMany(
         {date: req.params.tag},
         function(err){
             if(!err){
