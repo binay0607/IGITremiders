@@ -1,28 +1,49 @@
 const { Client, Intents, MessageEmbed, RichEmbed } = require("discord.js");
 const https = require("https");
-// const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 const keepAlive = require("./server");
-
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+const date = new Date();
+      // console.log("current Time", date);
+var ISToffSet = 330; //IST is 5:30; i.e. 60*5+30 = 330 in minutes 
+offset = ISToffSet * 60 * 1000;
+var today = new Date(date.getTime() + offset);
+
+      // var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+var hour = String(today.getHours());
+if (hour.length == 1) {
+  hour = "0" + hour;
+}
+var minute = String(today.getMinutes());
+if (minute.length == 1) {
+    minute = "0" + minute;
+}
+
+const tdate=today = dd + '.' + mm + '.' + yyyy;
+const ttime = hour + ":" + minute;
+
 function allupdate() {
-  https.get("https://enigmatic-bastion-19478.herokuapp.com/reminders", function (response) {
+  https.get("https://enigmatic-bastion-    19478.herokuapp.com/reminders", function (response) {
     response.on("data", function (data) {
       var noticeData = JSON.parse(data);
       noticeData.forEach(function (el) {
-        //      const linkInfo = new MessageEmbed()
-        // .setDescription(['LINK'](el.link));
 
-        // var msg="``` \n"+el.name+ "\n"+el.content+"\n"+"Link:"+el.link+"\n```";
+        if(el.date==tdate){
+          const eembed = new MessageEmbed().setColor('#0099ff').setTitle(el.name).setURL("https://discord.js.org/#/docs/main/stable/class/MessageEmbed").addField('Details:', el.content, true);
+          // console.log(embed);
+          client.guilds.fetch(guildId)
+            .then(guild =>
+              guild.channels.fetch(channelId)
+                .then(channel =>
+                  channel.send({ embeds: [eembed] })
+                ));
+        }
         // sendmessage(msg);
-        const eembed = new MessageEmbed().setColor('#0099ff').setTitle(el.name).setURL("https://discord.js.org/#/docs/main/stable/class/MessageEmbed").addField('Details:', el.content, true);
-        // console.log(embed);
-        client.guilds.fetch(guildId)
-          .then(guild =>
-            guild.channels.fetch(channelId)
-              .then(channel =>
-                channel.send({ embeds: [eembed] })
-              ));
+       
 
 
       })
@@ -51,6 +72,9 @@ function showupdates() {
         hour = "0" + hour;
       }
       var minute = String(today.getMinutes());
+      if (minute.length == 1) {
+        minute = "0" + minute;
+      }
 
       today = dd + '.' + mm + '.' + yyyy;
       var time = hour + ":" + minute;
@@ -62,18 +86,15 @@ function showupdates() {
           if (el.time == time) {
 
             var msg = "@everyone\n";
-            sendmessage(msg);
+            // sendmessage(msg);
             const eembed = new MessageEmbed().setColor('#0099ff').setTitle(el.name).setURL("https://discord.js.org/#/docs/main/stable/class/MessageEmbed").addField('Details:', el.content, true);
-        // console.log(embed);
-        client.guilds.fetch(guildId)
-          .then(guild =>
-            guild.channels.fetch(channelId)
-              .then(channel =>
-                channel.send({ embeds: [eembed] })
-              ));
-
-
-
+            // console.log(embed);
+            client.guilds.fetch(guildId)
+              .then(guild =>
+                guild.channels.fetch(channelId)
+                  .then(channel =>
+                    channel.send({ embeds: [eembed] })
+                  ));
           }
 
 

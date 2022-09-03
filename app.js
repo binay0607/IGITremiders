@@ -79,9 +79,9 @@ app.route("/reminders/:tag")
             }
         }
     )
-});
+})
 // .get(function(req,res){
-//     Article.findOne({name: req.params.tag}, function(err, foundItem){
+//     Article.findOne({dates: req.params.tag}, function(err, foundItem){
 //         if(foundItem){
 //             res.send(foundItem);
 //         }else{
